@@ -6,6 +6,7 @@ import dev.abhishek.mongodbbasics.repository.JournalRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +23,7 @@ public class JournalService {
         return journalRepository.findAll();
     }
 
+    @Transactional
     public void saveEntry(Journal journal, String userName) {
         User userObjDb = userService.findByUserName(userName);
         journal.setDate(LocalDateTime.now());
@@ -36,6 +38,7 @@ public class JournalService {
         return entry;
     }
 
+    @Transactional
     public void deleteById(ObjectId id, String userName) {
         User user = userService.findByUserName(userName);
         user.getJournalEntries().removeIf(x -> x.getId().equals(id));
@@ -43,6 +46,7 @@ public class JournalService {
         userService.saveEntry(user);
     }
 
+    @Transactional
     public Journal updateEntryById(ObjectId id, Journal journal) {
         // first get the object
         Journal journalEntry = journalRepository.findById(id)
@@ -54,6 +58,7 @@ public class JournalService {
         return journalRepository.save(journalEntry);
     }
 
+    @Transactional
     public Journal updateEntryById(Journal oldJournal) {
 //        Journal journalEntry = journalRepository.findById(id)
 //                .orElseThrow(() -> new RuntimeException("Journal not found"));
