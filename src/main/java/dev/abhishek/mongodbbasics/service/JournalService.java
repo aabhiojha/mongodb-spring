@@ -36,8 +36,11 @@ public class JournalService {
         return entry;
     }
 
-    public void deleteById(ObjectId id) {
+    public void deleteById(ObjectId id, String userName) {
+        User user = userService.findByUserName(userName);
+        user.getJournalEntries().removeIf(x -> x.getId().equals(id));
         journalRepository.deleteById(id);
+        userService.saveEntry(user);
     }
 
     public Journal updateEntryById(ObjectId id, Journal journal) {
@@ -49,5 +52,12 @@ public class JournalService {
         journalEntry.setDescription(journal.getDescription());
 
         return journalRepository.save(journalEntry);
+    }
+
+    public Journal updateEntryById(Journal oldJournal) {
+//        Journal journalEntry = journalRepository.findById(id)
+//                .orElseThrow(() -> new RuntimeException("Journal not found"));
+        return journalRepository.save(oldJournal);
+
     }
 }
