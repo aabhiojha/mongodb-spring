@@ -27,7 +27,7 @@ public class UserController {
         userService.saveEntry(user);
     }
 
-    @PutMapping("/{username}")
+    @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String username) {
         User userObj = userService.findByUserName(username);
         if (userObj != null) {
@@ -38,6 +38,5 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 
 }
