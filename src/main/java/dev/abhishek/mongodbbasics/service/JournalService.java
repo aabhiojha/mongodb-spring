@@ -4,7 +4,6 @@ import dev.abhishek.mongodbbasics.entity.Journal;
 import dev.abhishek.mongodbbasics.repository.JournalRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.boot.autoconfigure.data.AbstractRepositoryConfigurationSourceSupport;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class JournalService {
         journalRepository.save(journal);
     }
 
-    public Optional<Journal> getEntryById(ObjectId id) {
+    public Optional<Journal> findEntryById(ObjectId id) {
         Optional<Journal> entry = journalRepository.findById(id);
         System.out.println(entry);
         return entry;
